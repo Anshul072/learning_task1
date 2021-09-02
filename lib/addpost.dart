@@ -13,6 +13,8 @@ class _AddPostState extends State<AddPost> {
   final myControllerImgUrl= TextEditingController();
 
   @override
+
+
   void dispose() {
     // Clean up the controller when the widget is disposed.
     myControllerTitle.dispose();
@@ -41,6 +43,7 @@ class _AddPostState extends State<AddPost> {
 
   @override
   Widget build(BuildContext context) {
+
     return Material(
       child: SafeArea(
         child: ListView(

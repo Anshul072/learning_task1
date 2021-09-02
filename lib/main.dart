@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learning_project1/addpost.dart';
+import 'package:learning_project1/editpost.dart';
 import 'package:learning_project1/home.dart';
 
 void main() {
@@ -7,6 +8,7 @@ void main() {
     routes: {
       '/': (context) => Home(),
       '/addpost': (context) => AddPost(),
+      '/editpost':(context) => EditPost(),
     },
   ));
 }

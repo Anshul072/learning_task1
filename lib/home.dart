@@ -29,7 +29,13 @@ class _HomeState extends State<Home> {
                         },
                         index: posts.indexOf(post),
                         edit: () async {
-                          dynamic result= await Navigator.pushNamed(context, '/addpost');
+                          dynamic result= await Navigator.pushNamed(context,'/editpost',
+                          arguments: {
+                           'title':post.title,
+                           'description':post.description,
+                           'imgUrl':post.imgUrl,
+                          }
+                          );
                           setState(() {
                             posts[posts.indexOf(post)]=
                                 Post(title: result['title'], description: result['description'],imgUrl: result['imgUrl'],);
