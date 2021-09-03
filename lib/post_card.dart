@@ -15,11 +15,12 @@ class PostCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: const EdgeInsets.all(3.0),
+            padding: const EdgeInsets.fromLTRB(10.0, 5.0, 0.0, 5.0),
             child: Text(
               post.title,
               style: TextStyle(
                 color: Colors.white,
+                fontSize: 30.0,
               ),
             ),
           ),
@@ -27,11 +28,12 @@ class PostCard extends StatelessWidget {
             height: 6.0,
           ),
           Padding(
-            padding: const EdgeInsets.all(3.0),
+            padding: const EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 5.0),
             child: Text(
                 post.description,
                 style: TextStyle(
                   color: Colors.white,
+                  fontSize: 15.0,
                 ),
             ),
           ),
@@ -39,13 +41,16 @@ class PostCard extends StatelessWidget {
             height: 10.0,
           ),
           Image.network(post.imgUrl,height: 250.0),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+          SizedBox(height: 10.0,),
+          ButtonBar(
+           alignment: MainAxisAlignment.start,
             children: [
               TextButton.icon(
                   onPressed: () {edit();},
                   icon: Icon(Icons.edit),
-                  label:Text('edit post')
+                  label:Text(
+                      'edit post',
+                  )
               ),
               SizedBox(width: 10.0),
               TextButton.icon(

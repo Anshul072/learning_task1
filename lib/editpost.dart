@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:validators/validators.dart';
 
 class EditPost extends StatefulWidget {
   @override
@@ -20,20 +21,18 @@ class _EditPostState extends State<EditPost> {
     super.dispose();
   }
   bool emptyValidation =true;
-
+  bool urlValidation =true;
   void addPostFunc() {
-    if (myControllerTitle.text.isNotEmpty &&
+    urlValidation = isURL(myControllerImgUrl.text);
+    emptyValidation = myControllerTitle.text.isNotEmpty &&
         myControllerDescription.text.isNotEmpty &&
-        myControllerImgUrl.text.isNotEmpty) {
+        myControllerImgUrl.text.isNotEmpty;
+    if ( emptyValidation && urlValidation ) {
       Navigator.pop(context, {
         'title': myControllerTitle.text,
         'description': myControllerDescription.text,
         'imgUrl': myControllerImgUrl.text,
       });
-      emptyValidation=true;
-    }
-    else {
-      emptyValidation=false;
     }
   }
 
@@ -47,55 +46,80 @@ class _EditPostState extends State<EditPost> {
     return Material(
       child: Form(
         child: SafeArea(
-          child: ListView(
-            children: [Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Enter title',
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 0.0),
+            child: ListView(
+              children: [Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Enter title',
+                    ),
+                    controller: myControllerTitle,
                   ),
-                  controller: myControllerTitle,
-                ),
-                TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Enter description',
+                  SizedBox(height: 5.0,),
+                  TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Enter description',
+                    ),
+                    controller: myControllerDescription,
+                    keyboardType: TextInputType.multiline,
+                    maxLines: null,
                   ),
-                  controller: myControllerDescription,
-                  keyboardType: TextInputType.multiline,
-                  maxLines: null,
-                ),
-                TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Enter image Url',
+                  TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Enter image Url',
+                    ),
+                    controller: myControllerImgUrl,
                   ),
-                  controller: myControllerImgUrl,
-                ),
 
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      ElevatedButton(
-                        onPressed: (){
-                          addPostFunc();
-                          if(emptyValidation==false){
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return AlertDialog(
-                                  content: Text('field cannot be empty'),
-                                );
-                              },
-                            );
-                          }
-                        },
-                        child: Text('  add post'),
-                      ),
-                    ]
-                )
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        ElevatedButton(
+                          onPressed: (){
+                            addPostFunc();
+                            if(urlValidation==false && emptyValidation==true)
+                            {
+                              showDialog(
+                                  context: context,
+                                  builder:(context){
+                                    return AlertDialog(
+                                      content: Text('invalid url'),
+                                    );
+                                  }
+                              );
+                            }
+                            if(emptyValidation==false && urlValidation==true){
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    content: Text('field cannot be empty'),
+                                  );
+                                },
+                              );
+                            }
+                            if(emptyValidation==false && urlValidation==false){
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    content: Text('field cannot be empty and invalid url'),
+                                  );
+                                },
+                              );
+                            }
+                          },
+                          child: Text('  add post'),
+                        ),
+                      ]
+                  )
+                ],
+              ),
               ],
             ),
-            ],
           ),
         ),
       ),
